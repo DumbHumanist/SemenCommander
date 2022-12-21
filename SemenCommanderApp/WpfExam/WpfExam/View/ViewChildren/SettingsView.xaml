@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="WpfExam.View.ViewChildren.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfExam.View.ViewChildren" 
+             xmlns:singleton="clr-namespace:WpfExam.Model"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:res="clr-namespace:WpfExam.Properties"
+             xmlns:vm="clr-namespace:WpfExam.ViewModel.ViewModelChildren"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <vm:SettingsViewModel></vm:SettingsViewModel>
+    </UserControl.DataContext>
+    <Grid Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.BackgroundColor, UpdateSourceTrigger=PropertyChanged}">
+        <Grid>
+            <WrapPanel>
+                <StackPanel>
+                    <ListView Height="300" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20"
+                      SelectedIndex="{Binding ThemeIndex}"
+                      Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                      BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}"
+                      ItemsSource="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=Themes, UpdateSourceTrigger=PropertyChanged}"
+                      cal:Message.Attach="[Event SelectionChanged] = [Action ChangeThemeList] ; [Event MouseDoubleClick] = [Action RemoveTheme]">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding SlideBarBackground}" Width="180">
+                                    <WrapPanel>
+                                        <Rectangle Width="5" Height="5" Fill="{Binding SlideBarBackground}"></Rectangle>
+                                        <Border  BorderBrush="{Binding NavigationButtonBorder}" BorderThickness="2">
+                                            <TextBlock Text="{Binding Name}" Foreground="{Binding NavigationButtonForeground}"
+                                   Background="{Binding NavigationButtonBackground}"></TextBlock>
+                                        </Border>
+                                    </WrapPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                        Text="{Binding ThemeName}"
+                        Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
+                        BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                         Text="{Binding ThemeBackground}"
+                         Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
+                        BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                         Text="{Binding ThemeOverlay}"
+                         Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
+                        BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                         Text="{Binding ThemeAccent}"
+                        Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
+                        BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                        Text="{Binding ThemeText}"
+                        Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
+                        BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                    <Button Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                        cal:Message.Attach="[Event Click] = [Action AddTheme]"
+                        Content="{x:Static res:Resources.AddThemeButton}"
+                        Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
+                        BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
+                    </Button>
+                </StackPanel>
+
+                <StackPanel>
+                    <ComboBox Margin="20" Width="100" ItemsSource="{Binding IconViews}"
+                              cal:Message.Attach="[Event SelectionChanged] = [Action ChangeIconView]"
+                              SelectedItem="{Binding SelectedIconView}">
+                    </ComboBox>
+                </StackPanel>
+            </WrapPanel>
+        </Grid>
+    </Grid>
+</UserControl>
