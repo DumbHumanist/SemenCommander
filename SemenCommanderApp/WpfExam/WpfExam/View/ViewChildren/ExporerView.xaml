@@ -56,17 +56,17 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ListView 
-                        ItemsSource="{Binding Group}" BorderBrush="Transparent"
-                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                        SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
-                                        Mode=FindAncestor}, 
-                                        Path=DataContext.SelectedItem, 
-                                        Mode=OneWayToSource}"
-                        cal:Action.TargetWithoutContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
-                                        Mode=FindAncestor}, 
-                                        Path=DataContext}" 
+                    ItemsSource="{Binding Group}" BorderBrush="Transparent"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
+                                    Mode=FindAncestor}, 
+                                    Path=DataContext.SelectedItem, 
+                                    Mode=OneWayToSource}"
+                    cal:Action.TargetWithoutContext="{Binding RelativeSource={RelativeSource AncestorType=UserControl, 
+                                    Mode=FindAncestor}, 
+                                    Path=DataContext}" 
                         
-                        Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.BackgroundColor, UpdateSourceTrigger=PropertyChanged}">
+                    Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.BackgroundColor, UpdateSourceTrigger=PropertyChanged}">
                         <ListView.ItemContainerStyle>
                             <Style TargetType="{x:Type ListViewItem}">
                                 <Setter Property="Background" Value="Transparent" />
@@ -88,34 +88,35 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel Style="{StaticResource ExplorerTile}" 
-                                        cal:Message.Attach="
-                                                [Event MouseLeftButtonUp] = [Action OpenItem($dataContext)]
-                                                ">
+                                    cal:Message.Attach="
+                                            [Event MouseLeftButtonUp] = [Action OpenItem($dataContext)]
+                                            ">
                                     <Image Width="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=IconSize, UpdateSourceTrigger=PropertyChanged}"
-                                           Height="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=IconSize, UpdateSourceTrigger=PropertyChanged}"
-                                           DockPanel.Dock="Top"
-                                           Margin="0,5,0,0">
+                                        Height="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=IconSize, UpdateSourceTrigger=PropertyChanged}"
+                                        DockPanel.Dock="Top"
+                                        Margin="0,5,0,0">
                                         <Image.Source>
                                             <BitmapImage DecodePixelWidth="40"  
-                                                UriSource="{Binding Icon}" />
+                                            UriSource="{Binding Icon}" />
                                         </Image.Source>
                                     </Image>
                                     <TextBlock Text="{Binding Name}" FontWeight="Bold" HorizontalAlignment="Center" DockPanel.Dock="Top" 
-                                               FontSize="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
-                                               TextWrapping="Wrap"
-                                               TextAlignment="Center"
-                                               Margin="5,0,5,5"
-                                               Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"/>
+                                            FontSize="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
+                                            TextWrapping="Wrap"
+                                            TextAlignment="Center"
+                                            Margin="5,0,5,5"
+                                            Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"/>
 
                                     <DockPanel.ContextMenu>
                                         <ContextMenu>
-
                                             <MenuItem Header="Open" 
-                                                      Command="{Binding OpenCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                                                    Command="{Binding OpenCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                                            <MenuItem Header="Rename" 
+                                                    Command="{Binding RenameCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
                                             <MenuItem Header="Copy" 
-                                                      Command="{Binding CopyCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                                                    Command="{Binding CopyCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
                                             <MenuItem Header="Backup" 
-                                                      Command="{Binding BackupCommand, Source={StaticResource vm}}" CommandParameter="{Binding}">
+                                                    Command="{Binding BackupCommand, Source={StaticResource vm}}" CommandParameter="{Binding}">
                                                 <MenuItem.Icon>
                                                     <Image>
                                                         <Image.Source>
@@ -124,17 +125,28 @@
                                                     </Image>
                                                 </MenuItem.Icon>
                                             </MenuItem>
+                                            <MenuItem Header="Properties" 
+                                                    Command="{Binding PropertiesCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
                                             <Separator />
                                             <MenuItem Header="Delete" 
-                                                      Command="{Binding DeleteCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                                                    Command="{Binding DeleteCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
                                         </ContextMenu>
                                     </DockPanel.ContextMenu>
                                 </DockPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
+
                     </ListView>
                 </DataTemplate>
             </ListView.ItemTemplate>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Create Folder" 
+                                                Command="{Binding CreateFolderCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                    <MenuItem Header="Create File" 
+                                                Command="{Binding CreateFileCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
         </ListView>
     </Grid>
 </UserControl>

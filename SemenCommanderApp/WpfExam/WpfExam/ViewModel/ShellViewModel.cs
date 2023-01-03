@@ -59,7 +59,8 @@ namespace WpfExam {
         }
         public void Search()
         {
-            CurrentView = exporerView;
+            SearchView modalWindow = new SearchView();
+            modalWindow.ShowDialog();
         }
         public void Settings()
         {

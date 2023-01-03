@@ -155,6 +155,55 @@ namespace WpfExam.Model
             get => sortedContent;
         }
 
+        public void Search(string name)
+        {
+           this.Path = name;
+           Sort(windowWidth, windowHeight, InnerSearch(name, lastPath));
+        }
+
+        private List<IExplorerItem> InnerSearch(string name, string path)
+        {
+            List<IExplorerItem> result = new List<IExplorerItem>();
+
+            try
+            {
+                string[] files = Directory.GetFiles(path);
+                string[] directories = Directory.GetDirectories(path);
+                foreach (string file in files)
+                {
+                    if (file.Substring(file.LastIndexOf('\\') + 1) == name)
+                    {
+                        result.Add(new ExplorerFile
+                        {
+                            Name = ProcessName(file.Substring(file.LastIndexOf('\\') + 1)),
+                            Path = file,
+                            Type = "file",
+                            Icon = Directory.GetCurrentDirectory() + $"\\icons\\file.png",
+                        });
+                    }
+                }
+
+                foreach (string directory in directories)
+                {
+                    if (directory.Substring(directory.LastIndexOf('\\') + 1) == name)
+                    {
+                        result.Add(new ExplorerDirectory
+                        {
+                            Name = ProcessName(directory.Substring(directory.LastIndexOf('\\') + 1)),
+                            Path = directory,
+                            Type = "directory",
+                            Icon = Directory.GetCurrentDirectory() + $"\\icons\\directory.png",
+                        });
+                    }
+                    result.AddRange(InnerSearch(name, directory));
+                }
+            }
+            catch { }
+
+            return result;
+        }
+        
+
         public void LoadDirectory(string path, bool addToHistory = true)
         {
             if (path.Count() == 2)
@@ -202,7 +251,15 @@ namespace WpfExam.Model
         {
             if (CanUp())
             {
-                LoadDirectory(Path.Substring(0, Path.LastIndexOf('\\')));
+                try
+                {
+                    LoadDirectory(Path.Substring(0, Path.LastIndexOf('\\')));
+                }
+                catch
+                {
+                    LoadDirectory(lastPath);
+                    Sort(windowWidth, windowHeight);
+                }
             }
         }
         public void Back()
@@ -211,6 +268,7 @@ namespace WpfExam.Model
             {
                 forwardHistory.Add(Path);
                 LoadDirectory(backHistory[backHistory.Count() - 1], false);
+                Sort(windowWidth, windowHeight);
                 backHistory.RemoveAt(backHistory.Count() - 1);
                 ReloadIcons();
             }
@@ -220,6 +278,7 @@ namespace WpfExam.Model
             if (CanForward())
             {
                 LoadDirectory(forwardHistory[forwardHistory.Count() - 1]);
+                Sort(windowWidth, windowHeight);
                 forwardHistory.RemoveAt(forwardHistory.Count() - 1);
                 ReloadIcons();
             }
@@ -230,6 +289,7 @@ namespace WpfExam.Model
             try
             {
                 LoadDirectory(Path);
+                Sort(windowWidth, windowHeight);
                 ClearForward();
             }
             catch
@@ -242,6 +302,60 @@ namespace WpfExam.Model
         {
             forwardHistory.Clear();
             ReloadIcons();
+        }
+
+        public void Rename(IExplorerItem item, string newName)
+        {
+            try
+            {
+                if (item.Type == "file")
+                    File.Move(item.Path, item.Path.Substring(0, item.Path.LastIndexOf('\\')) + newName);
+                else
+                    Directory.Move(item.Path, item.Path.Substring(0, item.Path.LastIndexOf('\\')) + newName);
+                LoadDirectory(lastPath, false);
+                Sort(windowWidth, windowHeight);
+            }
+            catch { }
+        }
+        public void Delete(IExplorerItem item)
+        {
+            try
+            {
+                if (item.Type == "file")
+                    File.Delete(item.Path);
+                else
+                    DeleteFolder(item.Path);
+                LoadDirectory(lastPath, false);
+                Sort(windowWidth, windowHeight);
+            }
+            catch { }
+        }
+        private void DeleteFolder(string path)
+        {
+            string[] files = Directory.GetFiles(path);
+            foreach (string file in files)
+            {
+                File.Delete(file);
+            }
+            string[] directories = Directory.GetDirectories(path);
+            foreach (string directory in directories)
+            {
+                DeleteFolder(directory);
+            }
+            Directory.Delete(path);
+        }
+        public void Create(string name, string type)
+        {
+            try
+            {
+                if (type == "file")
+                    using (File.Create(lastPath + "\\" + name)) { }
+                else
+                    Directory.CreateDirectory(lastPath + "\\" + name);
+                LoadDirectory(lastPath, false);
+                Sort(windowWidth, windowHeight);
+            }
+            catch { }
         }
 
         private void ReloadIcons()
@@ -265,9 +379,35 @@ namespace WpfExam.Model
             items.Add(new ExplorerItemGroup());
             int j = 0;
             int i = 0;
-            while (i < Content.Count - 1)
+            while (i < Content.Count)
             {
                 items[items.Count - 1].Group.Add(Content[i]);
+                j++;
+
+                if (j % rowSize == 0)
+                    items.Add(new ExplorerItemGroup());
+                i++;
+            }
+            SortedContent = items;
+        }
+
+        public void Sort(int width, int height, List<IExplorerItem> content)
+        {
+            windowHeight = height;
+            windowWidth = width;
+
+            SortedContent.Clear();
+            ObservableCollection<ExplorerItemGroup> items = new ObservableCollection<ExplorerItemGroup>();
+            int rowSize = (width / (ItemWidth + 10));
+            int margin = iconView.Margin + (width - rowSize * (ItemWidth + 10)) / rowSize / 2;
+            Margin = margin.ToString();
+
+            items.Add(new ExplorerItemGroup());
+            int j = 0;
+            int i = 0;
+            while (i < content.Count - 1)
+            {
+                items[items.Count - 1].Group.Add(content[i]);
                 j++;
 
                 if (j % rowSize == 0)

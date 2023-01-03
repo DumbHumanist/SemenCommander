@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -11,7 +12,7 @@ using WpfExam.Model.Exporer;
 
 namespace WpfExam.ViewModel.ViewModelChildren
 {
-    class SettingsViewModel : BaseGradientViewModel
+    class SettingsViewModel : PropertyChangedBase
     {
         public string Text { set; get; } = "Settings";
 

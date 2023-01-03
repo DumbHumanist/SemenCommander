@@ -47,9 +47,7 @@
                             </Style.Triggers>
                         </Style>
                     </Style.Resources>
-                    
-                    
-                    </Style>
+                </Style>
             </Style.Resources>
         </Style>
     </Window.Resources>

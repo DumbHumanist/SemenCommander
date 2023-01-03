@@ -99,11 +99,30 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\ViewModelChildren\BaseGradientViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelChildren\BackupViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelChildren\CreateViewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\ExplorerViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelChildren\PropertiesViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelChildren\RenameViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelChildren\SearchWiewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\SettingsViewModel.cs" />
+    <Compile Include="View\ViewChildren\Backup.xaml.cs">
+      <DependentUpon>Backup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewChildren\CreateView.xaml.cs">
+      <DependentUpon>CreateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ViewChildren\ExporerView.xaml.cs">
       <DependentUpon>ExporerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewChildren\PropertiesView.xaml.cs">
+      <DependentUpon>PropertiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewChildren\RenameView.xaml.cs">
+      <DependentUpon>RenameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewChildren\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewChildren\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
@@ -112,7 +131,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\ViewChildren\Backup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewChildren\CreateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ViewChildren\ExporerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewChildren\PropertiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewChildren\RenameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewChildren\SearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
