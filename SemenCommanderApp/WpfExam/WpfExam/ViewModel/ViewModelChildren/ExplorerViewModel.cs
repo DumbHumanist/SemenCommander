@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfExam.Ifrastructure;
 using WpfExam.Model;
+using WpfExam.Model.Exporer;
 using WpfExam.View.ViewChildren;
 
 namespace WpfExam.ViewModel.ViewModelChildren
@@ -50,13 +54,12 @@ namespace WpfExam.ViewModel.ViewModelChildren
         }
         private async void ContextMenuBackup(object obj)
         {
-            string data = await GetBackupFilesAsync();
+            string data = await BackupFileAsync((ExplorerFile)obj);
         }
 
-        private async Task<string> GetBackupFilesAsync()
+        private async Task<string> BackupFileAsync(ExplorerFile file)
         {
-            var client = new HttpClient();
-            return await client.GetStringAsync("https://localhost:44340/backup/f886c565-0d27-4f49-9608-0cc975ce5299/all");
+            return await BackupSingleton.Instance.BackupFile(file);
         }
 
         private void ContextMenuDelete(object obj)

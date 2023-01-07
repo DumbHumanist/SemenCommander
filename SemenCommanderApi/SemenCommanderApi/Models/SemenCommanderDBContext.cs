@@ -38,6 +38,8 @@ namespace SemenCommanderApi.Models
 
                 entity.Property(e => e.FileContent).IsRequired();
 
+                entity.Property(e => e.FileName).IsRequired();
+
                 entity.Property(e => e.UploadDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");

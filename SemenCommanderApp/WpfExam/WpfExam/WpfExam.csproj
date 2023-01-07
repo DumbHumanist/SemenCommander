@@ -59,6 +59,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.9\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -84,16 +87,21 @@
     <Compile Include="Ifrastructure\IShell.cs" />
     <Compile Include="Ifrastructure\IUserView.cs" />
     <Compile Include="Ifrastructure\RelayCommand.cs" />
-    <Compile Include="Model\Exporer\BaseExplorerItem.cs" />
-    <Compile Include="Model\Exporer\ExplorerDirectory.cs" />
-    <Compile Include="Model\Exporer\ExplorerItemGroup.cs" />
-    <Compile Include="Model\Exporer\ExplorerSingleton.cs" />
-    <Compile Include="Model\Exporer\ExplorerFile.cs" />
-    <Compile Include="Model\Exporer\IconView.cs" />
-    <Compile Include="Model\Exporer\IExplorerItem.cs" />
+    <Compile Include="Model\BackupFileWe.cs" />
+    <Compile Include="Model\Explorer\BackupSingleton.cs" />
+    <Compile Include="Model\Explorer\BaseExplorerItem.cs" />
+    <Compile Include="Model\Explorer\ExplorerDirectory.cs" />
+    <Compile Include="Model\Explorer\ExplorerItemGroup.cs" />
+    <Compile Include="Model\Explorer\ExplorerSingleton.cs" />
+    <Compile Include="Model\Explorer\ExplorerFile.cs" />
+    <Compile Include="Model\Explorer\IconView.cs" />
+    <Compile Include="Model\Explorer\IExplorerItem.cs" />
+    <Compile Include="Model\FileWe.cs" />
     <Compile Include="Model\IconSingleton.cs" />
     <Compile Include="Model\Theme.cs" />
     <Compile Include="Model\ThemeSingleton.cs" />
+    <Compile Include="Model\UserSingleton.cs" />
+    <Compile Include="Model\UserWe.cs" />
     <Compile Include="ViewModel\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -106,8 +114,8 @@
     <Compile Include="ViewModel\ViewModelChildren\RenameViewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\SearchWiewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\SettingsViewModel.cs" />
-    <Compile Include="View\ViewChildren\Backup.xaml.cs">
-      <DependentUpon>Backup.xaml</DependentUpon>
+    <Compile Include="View\ViewChildren\BackupView.xaml.cs">
+      <DependentUpon>BackupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewChildren\CreateView.xaml.cs">
       <DependentUpon>CreateView.xaml</DependentUpon>
@@ -131,7 +139,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ViewChildren\Backup.xaml">
+    <Page Include="View\ViewChildren\BackupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

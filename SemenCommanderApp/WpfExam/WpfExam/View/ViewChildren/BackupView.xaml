@@ -1,0 +1,142 @@
+﻿<Window x:Class="WpfExam.View.ViewChildren.BackupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfExam.View.ViewChildren"
+        xmlns:singleton="clr-namespace:WpfExam.Model"
+        xmlns:vm="clr-namespace:WpfExam.ViewModel.ViewModelChildren"
+        xmlns:cal="http://www.caliburnproject.org"
+        mc:Ignorable="d"
+        Title="BackupView" Height="450" Width="800">
+    <Window.DataContext>
+        <vm:BackupViewModel></vm:BackupViewModel>
+    </Window.DataContext>
+    <Window.Resources>
+        <vm:BackupViewModel x:Key="vm"/>
+
+        <Style x:Key="ExplorerTile" TargetType="DockPanel">
+            <Setter Property="Control.Background" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}"/>
+            <Setter Property="Control.Width" Value="100"/>
+            <Setter Property="Control.Height" Value="120"/>
+            <Style.Triggers>
+                <Trigger Property = "IsMouseOver" Value = "True">
+                    <Setter Property="Control.Background" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <ListView
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            BorderThickness="0"
+            Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.BackgroundColor, UpdateSourceTrigger=PropertyChanged}"      
+                        
+            ItemsSource="{Binding Source={x:Static singleton:BackupSingleton.Instance}, Path=SortedContent, UpdateSourceTrigger=PropertyChanged}"
+            cal:Message.Attach="[Event SizeChanged] = [Action ResizeContent($source)]"
+            Padding="2,2,2,2">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <ContentPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="top"></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListView 
+                    ItemsSource="{Binding Group}" BorderBrush="Transparent"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    cal:Action.TargetWithoutContext="{Binding RelativeSource={RelativeSource AncestorType=Window, 
+                                    Mode=FindAncestor}, 
+                                    Path=DataContext}" 
+                        
+                    Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.BackgroundColor, UpdateSourceTrigger=PropertyChanged}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Margin" Value="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=Margin, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="top"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel Style="{StaticResource ExplorerTile}" 
+                                    cal:Message.Attach="
+                                            [Event MouseLeftButtonUp] = [Action LoadItem($dataContext)]
+                                            "
+                    cal:Action.TargetWithoutContext="{Binding RelativeSource={RelativeSource AncestorType=Window, 
+                                    Mode=FindAncestor}, 
+                                    Path=DataContext}" >
+                                    <Image Width="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=IconSize, UpdateSourceTrigger=PropertyChanged}"
+                                        Height="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=IconSize, UpdateSourceTrigger=PropertyChanged}"
+                                        DockPanel.Dock="Top"
+                                        Margin="0,5,0,0">
+                                        <Image.Source>
+                                            <BitmapImage DecodePixelWidth="40"  
+                                            UriSource="{Binding Icon}" />
+                                        </Image.Source>
+                                    </Image>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" HorizontalAlignment="Center" DockPanel.Dock="Top" 
+                                            FontSize="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
+                                            TextWrapping="Wrap"
+                                            TextAlignment="Center"
+                                            Margin="5,0,5,5"
+                                            Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <TextBlock Text="{Binding UploadDate}" FontWeight="Bold" HorizontalAlignment="Center" DockPanel.Dock="Bottom"  VerticalAlignment="Bottom"
+                                            FontSize="{Binding Source={x:Static singleton:ExplorerSingleton.Instance}, Path=FontSize, UpdateSourceTrigger=PropertyChanged}"
+                                            TextWrapping="Wrap"
+                                            TextAlignment="Center"
+                                            Margin="5,0,5,10"
+                                            Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                    <DockPanel.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Load" 
+                                                    Command="{Binding LoadCommand, Source={StaticResource vm}}" CommandParameter="{Binding}">
+                                                <MenuItem.Icon>
+                                                    <Image>
+                                                        <Image.Source>
+                                                            <BitmapImage DecodePixelWidth="40" UriSource="{Binding Source={x:Static singleton:IconSingleton.Instance}, Path=StorageIcon}" />
+                                                        </Image.Source>
+                                                    </Image>
+                                                </MenuItem.Icon>
+                                            </MenuItem>
+                                            <Separator />
+                                            <MenuItem Header="Delete" 
+                                                    Command="{Binding DeleteCommand, Source={StaticResource vm}}" CommandParameter="{Binding}"/>
+                                        </ContextMenu>
+                                    </DockPanel.ContextMenu>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Window>

@@ -14,6 +14,10 @@ namespace WpfExam.Model.Exporer
         public string Type { get; set; }
         public string Icon { get; set; }
 
+
+        public int Size { get; set; }
+        public DateTime UploadDate { get; set; }
+
         public virtual void Open() { }
     }
 }

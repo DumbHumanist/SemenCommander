@@ -13,6 +13,10 @@ namespace WpfExam.Model
         string Type { get; set; }
         string Icon { get; set; }
 
+
+        int Size { get; set; }
+        DateTime UploadDate { get; set; }
+
         void Open();
     }
 }

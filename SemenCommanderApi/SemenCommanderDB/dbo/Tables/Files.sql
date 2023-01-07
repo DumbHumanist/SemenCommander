@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Files](
 	[FileId] [uniqueidentifier] NOT NULL,
+	[FileName] [nvarchar](max) NOT NULL,
 	[FileContent] [varbinary](max) NOT NULL,
 	[UploadDate] [datetime] NOT NULL,
 	[UserId] [uniqueidentifier] NOT NULL,

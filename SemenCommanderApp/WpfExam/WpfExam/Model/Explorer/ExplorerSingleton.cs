@@ -123,6 +123,7 @@ namespace WpfExam.Model
 
         // content
         private string lastPath;
+        public string LastPath { get => lastPath; }
         private string path { get; set; }
         public string Path 
         { 

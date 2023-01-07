@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace WpfExam.View.ViewChildren
 {
     /// <summary>
-    /// Interaction logic for Backup.xaml
+    /// Interaction logic for BackupView.xaml
     /// </summary>
-    public partial class Backup : Window
+    public partial class BackupView : Window
     {
-        public Backup()
+        public BackupView()
         {
             InitializeComponent();
         }

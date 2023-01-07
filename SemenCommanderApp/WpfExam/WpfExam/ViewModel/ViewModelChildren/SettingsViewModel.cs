@@ -91,7 +91,6 @@ namespace WpfExam.ViewModel.ViewModelChildren
         public delegate void ThemeChanged(int index);
         public ThemeChanged ChangeTheme { get; set; }
 
-
         public void AddTheme()
         {
             ThemeSingleton.Instance.Themes.Add(new Theme(ThemeName, ThemeBackground, ThemeText, ThemeOverlay, ThemeAccent));
@@ -101,6 +100,14 @@ namespace WpfExam.ViewModel.ViewModelChildren
             ThemeOverlay = "Overlay Color";
             ThemeAccent = "Accent Color";
             ThemeSingleton.Instance.SaveThemes();
+        }
+        public void GenerateUser()
+        {
+            UserSingleton.Instance.GenerateUser();
+        }
+        public void RestoreUser()
+        {
+            UserSingleton.Instance.GenerateUser();
         }
 
         public void ChangeThemeList()

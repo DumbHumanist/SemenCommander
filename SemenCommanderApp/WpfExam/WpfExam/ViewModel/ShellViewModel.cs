@@ -1,5 +1,9 @@
+using Newtonsoft.Json;
+using SemenCommanderApi.Models;
 using System;
+using System.IO;
 using System.Net.Http;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,7 +59,7 @@ namespace WpfExam {
         }
         public void Refresh()
         {
-            ExplorerSingleton.Instance.LoadDirectory(ExplorerSingleton.Instance.Path, false);
+            ExplorerSingleton.Instance.LoadDirectory(ExplorerSingleton.Instance.LastPath, false);
         }
         public void Search()
         {
@@ -66,15 +70,12 @@ namespace WpfExam {
         {
             CurrentView = CurrentView == settingsView ? exporerView : settingsView;
         }
-        public async void OpenBackup()
+        public void OpenBackup()
         {
-            string data = await GetBackupFilesAsync();
+            BackupView modalWindow = new BackupView();
+            modalWindow.ShowDialog();
         }
-        private async Task<string> GetBackupFilesAsync()
-        {
-            var client = new HttpClient();
-            return await client.GetStringAsync("https://localhost:44340/backup/f886c565-0d27-4f49-9608-0cc975ce5299/all");
-        }
+        
 
         //Change theme
         public void ChangeTheme(int index)
