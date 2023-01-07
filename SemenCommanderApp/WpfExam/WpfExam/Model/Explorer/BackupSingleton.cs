@@ -11,6 +11,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using WpfExam.Model.Exporer;
+using WpfExam.View.ViewChildren;
+using WpfExam.ViewModel.ViewModelChildren;
 
 namespace WpfExam.Model
 {
@@ -67,11 +69,17 @@ namespace WpfExam.Model
 
         public async void LoadFiles()
         {
-            var files = await GetBackupFilesAsync();
+            try
+            {
+                var files = await GetBackupFilesAsync();
+                Content = new ObservableCollection<IExplorerItem>(files.Select(f => (IExplorerItem)f));
 
-            Content = new ObservableCollection<IExplorerItem>(files.Select(f => (IExplorerItem)f));
-
-            Sort(windowWidth, windowHeight);
+                Sort(windowWidth, windowHeight);
+            }
+            catch
+            {
+                ExplorerSingleton.Instance.ShowErrorMessage("Server is not responding");
+            }
         }
         private async Task<List<ExplorerFile>> GetBackupFilesAsync()
         {
@@ -106,20 +114,29 @@ namespace WpfExam.Model
 
         public async Task<string> BackupFile(ExplorerFile file)
         {
-            var client = new HttpClient();
-            using (var fileStreamContent = new StreamContent(File.OpenRead(file.Path)))
+            try
             {
-                fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                using (var multipartFormContent = new MultipartFormDataContent())
+                var client = new HttpClient();
+                using (var fileStreamContent = new StreamContent(File.OpenRead(file.Path)))
                 {
-                    multipartFormContent.Add(fileStreamContent, name: "file", fileName: file.Name);
+                    fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                    using (var multipartFormContent = new MultipartFormDataContent())
+                    {
+                        multipartFormContent.Add(fileStreamContent, name: "file", fileName: file.Name);
 
-                    var response = await client.PostAsync($"https://localhost:44340/backup/{UserSingleton.Instance.UserId}", multipartFormContent);
-                    response.EnsureSuccessStatusCode();
-                    var result = await response.Content.ReadAsStringAsync();
+                        var response = await client.PostAsync($"https://localhost:44340/backup/{UserSingleton.Instance.UserId}", multipartFormContent);
+                        response.EnsureSuccessStatusCode();
+                        var result = await response.Content.ReadAsStringAsync();
 
-                    return result;
+                        return result;
+                    }
                 }
+
+            }
+            catch
+            {
+                ExplorerSingleton.Instance.ShowErrorMessage("Server is not responding");
+                return "";
             }
         }
 

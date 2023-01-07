@@ -107,7 +107,7 @@ namespace WpfExam.ViewModel.ViewModelChildren
         }
         public void RestoreUser()
         {
-            UserSingleton.Instance.GenerateUser();
+            UserSingleton.Instance.RestoreUser();
         }
 
         public void ChangeThemeList()

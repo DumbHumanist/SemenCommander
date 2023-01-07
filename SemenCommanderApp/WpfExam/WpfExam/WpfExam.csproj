@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="ViewModel\ViewModelChildren\BackupViewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\CreateViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelChildren\ErrorViewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\ExplorerViewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\PropertiesViewModel.cs" />
     <Compile Include="ViewModel\ViewModelChildren\RenameViewModel.cs" />
@@ -119,6 +120,9 @@
     </Compile>
     <Compile Include="View\ViewChildren\CreateView.xaml.cs">
       <DependentUpon>CreateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewChildren\ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewChildren\ExporerView.xaml.cs">
       <DependentUpon>ExporerView.xaml</DependentUpon>
@@ -144,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ViewChildren\CreateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewChildren\ErrorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

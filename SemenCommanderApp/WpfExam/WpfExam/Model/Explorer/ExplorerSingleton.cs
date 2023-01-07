@@ -8,6 +8,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using WpfExam.Model.Exporer;
+using WpfExam.View.ViewChildren;
+using WpfExam.ViewModel.ViewModelChildren;
 
 namespace WpfExam.Model
 {
@@ -207,6 +209,7 @@ namespace WpfExam.Model
 
         public void LoadDirectory(string path, bool addToHistory = true)
         {
+            path = path.Replace("/", "\\");
             if (path.Count() == 2)
                 path += '\\';
 
@@ -217,7 +220,7 @@ namespace WpfExam.Model
             ReloadIcons();
 
             if (addToHistory)
-                backHistory.Add(Path);
+                backHistory.Add(lastPath);
             Path = lastPath = path;
         }
 
@@ -295,6 +298,7 @@ namespace WpfExam.Model
             }
             catch
             {
+                ShowErrorMessage("Invalid path");
                 Path = lastPath;
             }
         }
@@ -309,8 +313,9 @@ namespace WpfExam.Model
         {
             try
             {
+                var str = item.Path.Substring(0, item.Path.LastIndexOf('\\')) + newName;
                 if (item.Type == "file")
-                    File.Move(item.Path, item.Path.Substring(0, item.Path.LastIndexOf('\\')) + newName);
+                    File.Move(item.Path, item.Path.Substring(0, item.Path.LastIndexOf('\\') + 1) + newName);
                 else
                     Directory.Move(item.Path, item.Path.Substring(0, item.Path.LastIndexOf('\\')) + newName);
                 LoadDirectory(lastPath, false);
@@ -416,6 +421,13 @@ namespace WpfExam.Model
                 i++;
             }
             SortedContent = items;
+        }
+        public void ShowErrorMessage(string message)
+        {
+            var window = new ErrorView();
+            var viewModel = new ErrorViewModel(message);
+            window.DataContext = viewModel;
+            window.Show();
         }
     }
 }
