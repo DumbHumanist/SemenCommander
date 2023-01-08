@@ -22,7 +22,11 @@ namespace WpfExam.Model.Exporer
         }
         public override void Open() 
         {
-
+            try
+            {
+                System.Diagnostics.Process.Start(Path);
+            }
+            catch { }
         }
     }
 }

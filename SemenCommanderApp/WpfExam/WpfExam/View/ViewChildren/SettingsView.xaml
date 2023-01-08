@@ -38,37 +38,37 @@
                         </ListView.ItemTemplate>
                     </ListView>
 
-                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,10"
                         Text="{Binding ThemeName}"
                         Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
                         BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,10"
                          Text="{Binding ThemeBackground}"
                          Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
                         BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,10"
                          Text="{Binding ThemeOverlay}"
                          Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
                         BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,10"
                          Text="{Binding ThemeAccent}"
                         Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
                         BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                    <TextBox Width="200" HorizontalAlignment="Left" Margin="20,0,20,10"
                         Text="{Binding ThemeText}"
                         Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"
                         Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"
                         BorderBrush="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.AccentColor, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
-                    <Button Width="200" HorizontalAlignment="Left" Margin="20,0,20,20"
+                    <Button Width="200" HorizontalAlignment="Left" Margin="20,0,20,10"
                         cal:Message.Attach="[Event Click] = [Action AddTheme]"
                         Content="{x:Static res:Resources.AddThemeButton}"
                         Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.OverlayColor, UpdateSourceTrigger=PropertyChanged}"

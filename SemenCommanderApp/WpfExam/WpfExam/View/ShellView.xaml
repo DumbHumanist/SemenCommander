@@ -5,7 +5,7 @@
         xmlns:res="clr-namespace:WpfExam.Properties"
         xmlns:singleton="clr-namespace:WpfExam.Model"
         xmlns:cal="http://www.caliburnproject.org"
-        MinHeight="400" MinWidth="300">
+        MinHeight="620" MinWidth="540">
     <Window.Resources>
         <Style x:Key="ControlButton" TargetType="Border">
             <Setter Property="Control.Width" Value="40"/>
