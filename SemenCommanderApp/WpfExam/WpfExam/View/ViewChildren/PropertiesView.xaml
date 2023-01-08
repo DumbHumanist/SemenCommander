@@ -8,7 +8,8 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:vm="clr-namespace:WpfExam.ViewModel.ViewModelChildren"
         mc:Ignorable="d"
-        Title="Properties" Height="450" Width="600">
+        Title="Properties" Height="505" Width="600"
+        ResizeMode="NoResize">
     <Window.Resources>
         <Style x:Key="SearchField" TargetType="Border">
             <Setter Property="Height" Value="44"></Setter>
@@ -25,6 +26,11 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="PropName" TargetType="TextBlock">
+            <Setter Property="Margin" Value="20,10,10,0"/>
+            <Setter Property="FontSize" Value="20"></Setter>
+            <Setter Property="Foreground" Value="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}"></Setter>
+        </Style>
     </Window.Resources>
     <Window.DataContext>
         <vm:SearchWiewModel></vm:SearchWiewModel>
@@ -32,11 +38,25 @@
 
     <Grid Background="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.BackgroundColor, UpdateSourceTrigger=PropertyChanged}">
         <StackPanel>
+            <TextBlock Style="{StaticResource PropName}">Name</TextBlock>
             <Border Style="{StaticResource SearchField}">
-                <TextBlock>Some Property</TextBlock>
+                <TextBlock Text="{Binding FileName}"></TextBlock>
             </Border>
+            <TextBlock Style="{StaticResource PropName}">Path</TextBlock>
             <Border Style="{StaticResource SearchField}">
-                <TextBlock>Some Property</TextBlock>
+                <TextBlock Text="{Binding Path}"></TextBlock>
+            </Border>
+            <TextBlock Style="{StaticResource PropName}">Size</TextBlock>
+            <Border Style="{StaticResource SearchField}">
+                <TextBlock Text="{Binding Size}"></TextBlock>
+            </Border>
+            <TextBlock Style="{StaticResource PropName}">Created Date</TextBlock>
+            <Border Style="{StaticResource SearchField}">
+                <TextBlock Text="{Binding Created}"></TextBlock>
+            </Border>
+            <TextBlock Style="{StaticResource PropName}">Modified Date</TextBlock>
+            <Border Style="{StaticResource SearchField}">
+                <TextBlock Text="{Binding Modified}"></TextBlock>
             </Border>
         </StackPanel>
     </Grid>

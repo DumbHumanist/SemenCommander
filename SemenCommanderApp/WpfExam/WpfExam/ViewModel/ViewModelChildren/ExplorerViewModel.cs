@@ -76,7 +76,7 @@ namespace WpfExam.ViewModel.ViewModelChildren
         private void ContextMenuProperties(object obj)
         {
             var window = new PropertiesView();
-            var viewModel = new PropertiesViewModel();
+            var viewModel = new PropertiesViewModel((IExplorerItem)obj);
             window.DataContext = viewModel;
             window.Show();
         }
