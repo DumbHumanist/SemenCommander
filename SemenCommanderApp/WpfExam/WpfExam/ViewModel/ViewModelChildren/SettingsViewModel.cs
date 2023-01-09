@@ -120,6 +120,7 @@ namespace WpfExam.ViewModel.ViewModelChildren
             if (ThemeIndex != 0 && ThemeIndex != -1)
             {
                 ThemeSingleton.Instance.Themes.RemoveAt(ThemeIndex);
+                ThemeSingleton.Instance.SaveThemes();
             }
         }
 

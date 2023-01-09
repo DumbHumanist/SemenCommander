@@ -9,7 +9,7 @@
         xmlns:local="clr-namespace:WpfExam.View.ViewChildren"
         mc:Ignorable="d"
         Title="Search" Height="110" Width="500"
-        x:Name="SearchWindow">
+        x:Name="Search">
 
     <Window.Resources>
         <Style x:Key="SearchField" TargetType="Border">

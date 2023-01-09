@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:WpfExam.ViewModel.ViewModelChildren"
         xmlns:local="clr-namespace:WpfExam.View.ViewChildren"
         mc:Ignorable="d"
-        Title="ErrorView" Height="160" Width="500">
+        Title="Error" Height="160" Width="500">
     <Window.DataContext>
         <vm:ErrorViewModel></vm:ErrorViewModel>
     </Window.DataContext>

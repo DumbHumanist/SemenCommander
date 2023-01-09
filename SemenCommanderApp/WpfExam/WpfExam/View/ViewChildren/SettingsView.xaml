@@ -78,7 +78,12 @@
                 </StackPanel>
 
                 <StackPanel>
-                    <ComboBox Margin="20" Width="100" ItemsSource="{Binding IconViews}"
+                    
+                    <TextBlock Margin="20,15,20,0"
+                        Foreground="{Binding Source={x:Static singleton:ThemeSingleton.Instance}, Path=CurrentTheme.TextColor, UpdateSourceTrigger=PropertyChanged}">
+                        Tile Size
+                    </TextBlock>
+                    <ComboBox Margin="20,0,20,20" Width="240" ItemsSource="{Binding IconViews}"
                               cal:Message.Attach="[Event SelectionChanged] = [Action ChangeIconView]"
                               SelectedItem="{Binding SelectedIconView}">
                     </ComboBox>

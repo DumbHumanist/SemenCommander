@@ -22,7 +22,7 @@ namespace SemenCommanderApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(Guid userId, string password)
+        public async Task<IActionResult> Register()
         {
             StreamReader reader = new StreamReader(HttpContext.Request.Body);
             var user = JsonSerializer.Deserialize<UserWe>(await reader.ReadToEndAsync());
@@ -34,6 +34,18 @@ namespace SemenCommanderApi.Controllers
                     User newUser = new User() { UserId = user.UserId, Password = user.Password };
                     context.Users.Add(newUser);
                     context.SaveChanges();
+                    return Ok();
+                }
+            }
+            return BadRequest();
+        }
+        [HttpGet("{userId}/{password}")]
+        public IActionResult Authentificate(Guid userId, string password)
+        {
+            if (userId != Guid.Empty)
+            {
+                if (context.Users.Any(u => u.UserId == userId && u.Password == password))
+                {
                     return Ok();
                 }
             }

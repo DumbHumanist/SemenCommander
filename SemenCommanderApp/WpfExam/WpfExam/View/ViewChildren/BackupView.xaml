@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:WpfExam.ViewModel.ViewModelChildren"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="BackupView" Height="450" Width="800">
+        Title="Backup" Height="450" Width="800">
     <Window.DataContext>
         <vm:BackupViewModel></vm:BackupViewModel>
     </Window.DataContext>

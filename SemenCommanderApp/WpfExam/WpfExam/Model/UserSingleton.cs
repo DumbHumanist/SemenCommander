@@ -53,7 +53,7 @@ namespace WpfExam.Model
         public void GenerateUser()
         {
             UserId = Guid.NewGuid().ToString();
-            Password = (new Random().Next() % 100000).ToString();
+            Password = (new Random().Next() % 100000000).ToString();
             
             RegisterUser();
             SaveUser();
@@ -90,7 +90,7 @@ namespace WpfExam.Model
 
         }
 
-        private void LoadUser()
+        private async void LoadUser()
         {
             if (File.Exists("currentUser.txt"))
             {
@@ -113,6 +113,24 @@ namespace WpfExam.Model
                 {
                     sw.Write($"{userId};{Password}");
                 }
+            }
+            var client = new HttpClient();
+            try
+            {
+                var response = await client.GetAsync($"https://localhost:44340/user/{UserId}/{Password}");
+                switch (response.StatusCode)
+                {
+                    case System.Net.HttpStatusCode.BadRequest:
+                        RegisterUser();
+                        break;
+                    case System.Net.HttpStatusCode.InternalServerError:
+                        ExplorerSingleton.Instance.ShowErrorMessage("Server is unreachable");
+                        break;
+                }
+            }
+            catch
+            {
+                ExplorerSingleton.Instance.ShowErrorMessage("Server is unreachable");
             }
         }
     }
